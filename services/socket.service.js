@@ -27,6 +27,7 @@ function connectSockets(http, session) {
             }
         })
         socket.on('chat topic', topic => {
+            console.log('joinning topic', topic);
             if (socket.myTopic === topic) return;
             if (socket.myTopic) {
                 socket.leave(socket.myTopic)
@@ -35,9 +36,25 @@ function connectSockets(http, session) {
             // logger.debug('Session ID is', socket.handshake.sessionID)
             socket.myTopic = topic
         })
+        socket.on('newActivity', msg => {
+            console.log('msg:', msg)
+
+            // emits to all sockets:
+            // gIo.emit('chat addMsg', msg)
+            // emits only to sockets in the same room
+            socket.to(socket.myTopic).emit('addActivity', msg)
+        })
         socket.on('chat newMsg', msg => {
             console.log('msg:', msg)
-            
+
+            // emits to all sockets:
+            // gIo.emit('chat addMsg', msg)
+            // emits only to sockets in the same room
+            socket.to(socket.myTopic).emit('chat addMsg', msg)
+        })
+        socket.on('chat newMsg', msg => {
+            console.log('msg:', msg)
+
             // emits to all sockets:
             // gIo.emit('chat addMsg', msg)
             // emits only to sockets in the same room
@@ -45,11 +62,11 @@ function connectSockets(http, session) {
         })
         socket.on('chat user-typing', data => {
             // console.log('msg:', msg)
-            
+
             // emits to all sockets:
             // gIo.emit('chat addMsg', msg)
             // emits only to sockets in the same room
-            socket.to(socket.myTopic).emit('chat user-typing',data)
+            socket.to(socket.myTopic).emit('chat user-typing', data)
         })
 
 
