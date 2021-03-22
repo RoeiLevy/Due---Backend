@@ -42,6 +42,15 @@ app.use('/api/auth', authRoutes)
 app.use('/api/board', boardRoutes)
 connectSockets(http, session)
 
+
+// TODO: check with app.use
+app.get('/api/setup-session', (req, res) =>{
+    req.session.connectedAt = Date.now()
+    // console.log('setup-session:', req.sessionID);
+    res.end()
+})
+
+
 // Make every server-side-route to match the index.html
 // so when requesting http://localhost:3030/index.html/car/123 it will still respond with
 // our SPA (single page app) (the index.html file) and allow vue/react-router to take it from there

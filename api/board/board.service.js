@@ -60,7 +60,7 @@ async function getById(boardId) {
     try {
         // console.log('boardId:', boardId)
         const collection = await dbService.getCollection('board');
-        console.log('collection:', collection)
+        // console.log('collection:', collection)
         const board = await collection.findOne({ '_id': ObjectId(boardId) });
         // console.log('board:', board)
         return board;

@@ -15,6 +15,7 @@ function connectSockets(http, session) {
         autoSave: true
     }));
     gIo.on('connection', socket => {
+        console.log('Someone connected')
         // console.log('socket.handshake', socket.handshake)
         gSocketBySessionIdMap[socket.handshake.sessionID] = socket
         // TODO: emitToUser feature - need to tested for CaJan21
