@@ -4,9 +4,9 @@ const loggerService = require('../../services/logger.service');
 async function getBoards(req, res) {
     // var filterBy = req.query;
     try {
-        console.log('in getBoards');
+        // console.log('in getBoards');
+        // console.log('boards:', boards)
         const boards = await boardService.query()
-        console.log('boards:', boards)
         res.send(boards)
     } catch (err) {
         loggerService.error('Couldn`t get boards from DB', err);
