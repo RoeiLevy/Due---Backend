@@ -4,7 +4,9 @@ const loggerService = require('../../services/logger.service');
 async function getBoards(req, res) {
     // var filterBy = req.query;
     try {
+        console.log('in getBoards');
         const boards = await boardService.query()
+        console.log('boards:', boards)
         res.send(boards)
     } catch (err) {
         loggerService.error('Couldn`t get boards from DB', err);
@@ -12,7 +14,7 @@ async function getBoards(req, res) {
     }
 }
 
-async function getBoard(req, res) {
+async function getBoard(req, res) { 
     try {
         const board = await boardService.getById(req.params.id);
         res.send(board);
@@ -43,7 +45,6 @@ async function updateBoard(req, res) {
         loggerService.error('Couldn`t update board', err)
         res.status(500).send({ err: 'Failed to update board' })
     }
-
 }
 
 async function deleteBoard(req, res) {
