@@ -2,6 +2,7 @@
 
 const asyncLocalStorage = require('./als.service');
 const logger = require('./logger.service');
+const boardService = require('../api/board/board.service')
 
 var gIo = null
 var gSocketBySessionIdMap = {}
@@ -32,21 +33,21 @@ function connectSockets(http, session) {
                 socket.leave(socket.myTopic)
             }
             socket.join(topic)  
-            // logger.debug('Session ID is', socket.handshake.sessionID)
             socket.myTopic = topic
+            // logger.debug('Session ID is', socket.handshake.sessionID)
         })
-        socket.on('new activity', msg => {
-            console.log('msg:', msg)
-            // console.log('socket', socket);
-
+        socket.on('new activity', activity => {
+            console.log('activity:', activity)
             // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
-            // gIo.emit('add activity', msg)
+            // gIo.emit('add activity', activity)
             // emits only to sockets in the same room
-            // console.log('room', socket.boardId);
-            // console.log('BALBA', socket);
-            socket.to(socket.myTopic).emit('add activity', msg)
-            // gIo.to(socket.boardId).emit('add activity', msg)
+
+            boardService.addActivity(activity, socket.myTopic)
+    
+            // socket.to(socket.myTopic).emit('add activity', activity)
+            console.log('current socket topic: ', socket.myTopic);      
+            socket.broadcast.to(socket.myTopic).emit('add activity', activity)
+            // gIo.to(socket.myTopic).emit('add activity', msg)
         })
         socket.on('chat newMsg', msg => {
             console.log('msg:', msg)

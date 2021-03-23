@@ -8,7 +8,21 @@ module.exports = {
     getById,
     remove,
     update,
-    add
+    add,
+    addActivity
+}
+
+async function addActivity(activity, boardId) {
+    try {
+        const board = await getById(boardId);
+        if (!board.activities) board.activities = []
+        board.activities.unshift(activity)
+        await update(board)
+        console.log('activity saved', activity);
+        return activity
+    } catch (err) {
+        console.log('err:', err)
+    }
 }
 
 async function query(filterBy) {
