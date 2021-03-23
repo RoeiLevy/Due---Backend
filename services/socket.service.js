@@ -45,9 +45,21 @@ function connectSockets(http, session) {
             boardService.addActivity(activity, socket.myTopic)
     
             // socket.to(socket.myTopic).emit('add activity', activity)
+            // socket.broadcast.to(socket.myTopic).emit('add activity', activity)
+            // socket.to(socket.myTopic).emit('add activity', activity)
             console.log('current socket topic: ', socket.myTopic);      
-            socket.broadcast.to(socket.myTopic).emit('add activity', activity)
-            // gIo.to(socket.myTopic).emit('add activity', msg)
+            gIo.to(socket.myTopic).emit('add activity', activity)
+        })
+        socket.on('send board', board => {
+            console.log('board:', board)
+            // emits to all sockets:
+            // gIo.emit('add board', board)
+            // emits only to sockets in the same room
+            // socket.to(socket.myTopic).emit('add board', board)
+            // socket.broadcast.to(socket.myTopic).emit('get board', board)
+            console.log('current socket topic: ', socket.myTopic);      
+            // socket.to(socket.myTopic).emit('get board', board)
+            gIo.to(socket.myTopic).emit('get board', board)
         })
         socket.on('chat newMsg', msg => {
             console.log('msg:', msg)
