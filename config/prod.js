@@ -1,3 +1,3 @@
 module.exports = {
-  'dbURL': 'mongodb+srv://roi1219:levyroi1@cluster0.1rjez.mongodb.net/toy_db?retryWrites=true&w=majority',
+  'dbURL': 'mongodb+srv://Yonatan:1234@cluster0.ogahi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 }
