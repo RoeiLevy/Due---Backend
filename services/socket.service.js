@@ -45,6 +45,7 @@ function connectSockets(http, session) {
             // socket.broadcast.to(socket.myTopic).emit('get board', board)
             console.log('current socket topic: ', socket.myTopic);      
             // socket.to(socket.myTopic).emit('get board', board)
+            // gIo.to(socket.myTopic).emit('get board', board)
             gIo.to(socket.myTopic).emit('get board', board)
         })
         socket.on('chat newMsg', msg => {
