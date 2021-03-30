@@ -36,20 +36,6 @@ function connectSockets(http, session) {
             socket.myTopic = topic
             // logger.debug('Session ID is', socket.handshake.sessionID)
         })
-        socket.on('new activity', activity => {
-            console.log('activity:', activity)
-            // emits to all sockets:
-            // gIo.emit('add activity', activity)
-            // emits only to sockets in the same room
-
-            boardService.addActivity(activity, socket.myTopic)
-    
-            // socket.to(socket.myTopic).emit('add activity', activity)
-            // socket.broadcast.to(socket.myTopic).emit('add activity', activity)
-            // socket.to(socket.myTopic).emit('add activity', activity)
-            console.log('current socket topic: ', socket.myTopic);      
-            gIo.to(socket.myTopic).emit('add activity', activity)
-        })
         socket.on('send board', board => {
             console.log('board:', board)
             // emits to all sockets:
