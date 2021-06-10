@@ -39,44 +39,10 @@ async function query(filterBy) {
     }
 }
 
-// function query(filterBy) {
-//     var boardsForDisplay = JSON.parse(JSON.stringify(gBoards));
-//     if (!filterBy) {
-//         return Promise.resolve(boardsForDisplay);
-//     }
-//     if (filterBy.name) {
-//         boardsForDisplay = boardsForDisplay.filter(t => t.name.includes(filterBy.name));
-//     }
-//     if (filterBy.price) {
-//         boardsForDisplay = boardsForDisplay.filter(t => +t.price <= +filterBy.price);
-//     }
-//     if (filterBy.onStock) {
-//         boardsForDisplay = boardsForDisplay.filter(t => t.inStock === true);
-//     }
-//     if (filterBy.type) {
-//         boardsForDisplay = boardsForDisplay.filter(t => t.type === filterBy.type);
-//     }
-//     if (filterBy.sortBy) {
-//         if (filterBy.sortBy === 'name') {
-//             boardsForDisplay = boardsForDisplay.sort((t1, t2) => {
-//                 return t1.name - t2.name;
-//             });
-//         } else if (filterBy.sortBy === 'price') {
-//             boardsForDisplay = boardsForDisplay.sort((t1, t2) => {
-//                 return t1.price - t2.price;
-//             });
-//         }
-//     }
-//     return Promise.resolve(boardsForDisplay);
-// }
-
 async function getById(boardId) {
     try {
-        // console.log('boardId:', boardId)
         const collection = await dbService.getCollection('board');
-        // console.log('collection:', collection)
         const board = await collection.findOne({ '_id': ObjectId(boardId) });
-        // console.log('board:', board)
         return board;
     } catch (err) {
         logger.error(`while finding user ${boardId}`, err);
