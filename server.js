@@ -17,21 +17,19 @@ const session = expressSession({
 app.use(express.json())
 app.use(session)
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.resolve(__dirname, 'public')))
-} else {
-    const corsOptions = {
-        origin: ['http://127.0.0.1:8081', 'http://localhost:8081','http://127.0.0.1:8080', 'http://localhost:8080', 'http://127.0.0.1:3000', 'http://localhost:3000'],
-        credentials: true
-    }
-    app.use(cors(corsOptions))
+
+const corsOptions = {
+    origin: ['https://due-team-management.netlify.app', 'http://127.0.0.1:8080', 'http://localhost:8080', 'http://127.0.0.1:3000', 'http://localhost:3000'],
+    credentials: true
 }
+app.use(cors(corsOptions))
+
 
 // const reviewRoutes = require('./api/review/review.routes')
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const boardRoutes = require('./api/board/board.routes')
-const {connectSockets} = require('./services/socket.service')
+const { connectSockets } = require('./services/socket.service')
 
 // routes
 const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware')
@@ -45,7 +43,7 @@ connectSockets(http, session)
 
 
 // TODO: check with app.use
-app.get('/api/setup-session', (req, res) =>{
+app.get('/api/setup-session', (req, res) => {
     req.session.connectedAt = Date.now()
     // console.log('setup-session:', req.sessionID);
     res.end()
