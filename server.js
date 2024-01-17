@@ -39,6 +39,9 @@ app.all('*', setupAsyncLocalStorage)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/board', boardRoutes)
+app.get('/keep-warm', (req, res) => {
+    return res.json("server warmed at:" + new Date().toLocaleString())
+})
 connectSockets(http, session)
 
 
@@ -63,7 +66,6 @@ http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
 })
 
-// console.log('I am Here!, am I?')
 
 
 
